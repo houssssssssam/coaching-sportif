@@ -33,7 +33,7 @@ public class LoginController {
         messageErreur.setText("");
         try {
             authService.connecter(champEmail.getText(), champMotDePasse.getText());
-            Vues.afficher("main", "Accueil", 1150, 720);
+            Vues.afficher("main", "Accueil", 1280, 780);
         } catch (ValidationException e) {
             messageErreur.setText(e.getMessage());
             champMotDePasse.clear();
