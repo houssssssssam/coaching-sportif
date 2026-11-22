@@ -13,7 +13,7 @@ SET NAMES utf8mb4;
 USE coaching_sportif;
 
 INSERT INTO utilisateur (id, nom, prenom, email, mot_de_passe_hash, role) VALUES
-(1, 'Admin', 'Système', 'admin@coaching.ma', '$2a$10$k0hxe3.zcLBpEQ/Sd8tMveyZ4j4QlGbGn/1ve.9zEE6YlfXfDFg3m', 'ADMIN'),
+(1, 'Principal', 'Admin', 'admin@coaching.ma', '$2a$10$k0hxe3.zcLBpEQ/Sd8tMveyZ4j4QlGbGn/1ve.9zEE6YlfXfDFg3m', 'ADMIN'),
 (2, 'Alami', 'Youssef', 'youssef.alami@coaching.ma', '$2a$10$pU36SNf88IHHwdeoC4UYLuUcv1FQ5hXMEKQG2c88tVs1EvLZsNArC', 'COACH'),
 (3, 'Bennani', 'Salma', 'salma.bennani@coaching.ma', '$2a$10$pU36SNf88IHHwdeoC4UYLuUcv1FQ5hXMEKQG2c88tVs1EvLZsNArC', 'COACH'),
 (4, 'Idrissi', 'Karim', 'karim.idrissi@mail.ma', '$2a$10$sGmiz/mr1MeaO539I7hHPuL8ushZdNqi6XvSjITVpro7CwHcFOXOa', 'SPORTIF'),

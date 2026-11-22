@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ma.emsi.coaching.controller.AccueilController" spacing="20">
+    <Label fx:id="titre" styleClass="titre-page"/>
+    <FlowPane fx:id="cartes" hgap="16" vgap="16"/>
+</VBox>

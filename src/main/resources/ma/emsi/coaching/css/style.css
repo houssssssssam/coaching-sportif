@@ -1,0 +1,176 @@
+/* ---------- Général ---------- */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f5f6f8;
+}
+
+.texte-secondaire {
+    -fx-text-fill: #6b7280;
+}
+
+.titre-page {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+/* ---------- Connexion ---------- */
+.page-login {
+    -fx-background-color: white;
+}
+
+.titre-login {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.message-erreur {
+    -fx-text-fill: #b91c1c;
+}
+
+/* ---------- Boutons ---------- */
+.bouton-principal {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 9 16;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.bouton-principal:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+/* ---------- Barre latérale ---------- */
+.barre-laterale {
+    -fx-background-color: #1f2937;
+}
+
+.titre-application {
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+.nom-utilisateur {
+    -fx-text-fill: #e5e7eb;
+    -fx-padding: 10 0 0 0;
+}
+
+.role-utilisateur {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 12px;
+}
+
+.bouton-menu {
+    -fx-background-color: transparent;
+    -fx-text-fill: #d1d5db;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 9 12;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.bouton-menu:hover {
+    -fx-background-color: #374151;
+}
+
+.bouton-menu.actif {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+}
+
+/* ---------- Contenu ---------- */
+.zone-contenu {
+    -fx-background-color: #f5f6f8;
+}
+
+.carte {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-padding: 16 20;
+    -fx-min-width: 200;
+}
+
+.carte-libelle {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
+}
+
+.carte-valeur {
+    -fx-text-fill: #111827;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* ---------- Écrans de gestion ---------- */
+.barre-outils {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.panneau-formulaire {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-padding: 18;
+}
+
+.titre-formulaire {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.sous-titre {
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+    -fx-padding: 8 0 0 0;
+}
+
+.bouton-secondaire {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8 14;
+    -fx-cursor: hand;
+}
+
+.bouton-secondaire:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.bouton-danger {
+    -fx-background-color: white;
+    -fx-text-fill: #b91c1c;
+    -fx-border-color: #fca5a5;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8 14;
+    -fx-cursor: hand;
+}
+
+.bouton-danger:hover {
+    -fx-background-color: #fef2f2;
+}
+
+.table-view {
+    -fx-background-radius: 8;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+}
+
+.table-view .column-header {
+    -fx-font-weight: bold;
+}
+
+/* Dans les formulaires, les listes déroulantes prennent toute la largeur */
+.panneau-formulaire .combo-box, .panneau-formulaire .date-picker {
+    -fx-pref-width: 1000;
+}
