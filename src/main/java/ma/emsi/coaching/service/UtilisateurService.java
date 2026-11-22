@@ -76,6 +76,14 @@ public class UtilisateurService {
         return profilDao.trouverParSportif(sportifId);
     }
 
+    /** Coach assigné à un sportif (consultable par le sportif lui-même, son coach ou l'admin). */
+    public Optional<Utilisateur> coachDe(int sportifId) {
+        new AccesService().verifierAccesSportif(sportifId);
+        return profilDao.trouverParSportif(sportifId)
+                .map(ProfilSportif::getCoachId)
+                .flatMap(utilisateurDao::trouverParId);
+    }
+
     /** On désactive au lieu de supprimer pour conserver l'historique. */
     public void changerStatut(int id, boolean actif) {
         Utilisateur admin = Session.exiger(Role.ADMIN);

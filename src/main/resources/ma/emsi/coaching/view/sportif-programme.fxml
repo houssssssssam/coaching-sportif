@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ma.emsi.coaching.controller.SportifProgrammeController" spacing="12">
+    <Label text="Mon programme" styleClass="titre-page"/>
+    <Label fx:id="nomProgramme" styleClass="titre-formulaire"/>
+    <Label fx:id="infosProgramme" styleClass="texte-secondaire" wrapText="true"/>
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+        <FlowPane fx:id="jours" hgap="16" vgap="16"/>
+    </ScrollPane>
+</VBox>

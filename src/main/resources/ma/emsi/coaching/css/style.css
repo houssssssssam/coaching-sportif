@@ -174,3 +174,14 @@
 .panneau-formulaire .combo-box, .panneau-formulaire .date-picker {
     -fx-pref-width: 1000;
 }
+
+/* ---------- Statuts ---------- */
+.statut-ok {
+    -fx-text-fill: #15803d;
+    -fx-font-weight: bold;
+}
+
+.statut-alerte {
+    -fx-text-fill: #b45309;
+    -fx-font-weight: bold;
+}
