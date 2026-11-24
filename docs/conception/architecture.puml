@@ -1,0 +1,35 @@
+@startuml architecture
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam packageStyle rectangle
+
+package "Présentation (JavaFX, MVC)" as P {
+  [Vues FXML + CSS] as V
+  [Contrôleurs] as C
+}
+package "Services (règles métier, droits)" as S {
+  [AuthService] 
+  [UtilisateurService]
+  [ProgrammeService]
+  [SuiviService]
+  [NutritionService]
+  [CatalogueService]
+  [AccesService]
+}
+package "Accès aux données (DAO, JDBC)" as D {
+  [UtilisateurDao, ProgrammeDao, ...] as DAO
+}
+package "Modèle" as M {
+  [Entités + enums] as E
+}
+database "MySQL\ncoaching_sportif" as DB
+
+V --> C
+C --> S
+S --> D
+D --> DB
+C ..> M
+S ..> M
+D ..> M
+@enduml

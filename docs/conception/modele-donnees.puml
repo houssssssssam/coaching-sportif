@@ -1,0 +1,122 @@
+@startuml modele-donnees
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+hide circle
+
+entity utilisateur {
+  * id : INT <<PK>>
+  --
+  nom : VARCHAR(60)
+  prenom : VARCHAR(60)
+  email : VARCHAR(120) <<UNIQUE>>
+  mot_de_passe_hash : VARCHAR(255)
+  role : ENUM
+  actif : BOOLEAN
+  date_creation : DATETIME
+}
+entity profil_sportif {
+  * utilisateur_id : INT <<PK, FK>>
+  --
+  coach_id : INT <<FK>>
+  sexe : ENUM
+  date_naissance : DATE
+  taille_cm : DECIMAL
+  objectif : ENUM
+  niveau_activite : ENUM
+}
+entity programme {
+  * id : INT <<PK>>
+  --
+  nom : VARCHAR(100)
+  description : TEXT
+  objectif : ENUM
+  niveau : ENUM
+  coach_id : INT <<FK>>
+  date_creation : DATETIME
+}
+entity programme_exercice {
+  * id : INT <<PK>>
+  --
+  programme_id : INT <<FK>>
+  exercice_id : INT <<FK>>
+  jour : TINYINT
+  ordre : TINYINT
+  series : TINYINT
+  repetitions : SMALLINT
+  charge_kg : DECIMAL
+  duree_min : SMALLINT
+  consigne : VARCHAR(255)
+}
+entity exercice {
+  * id : INT <<PK>>
+  --
+  nom : VARCHAR(100) <<UNIQUE>>
+  groupe_musculaire : VARCHAR(50)
+  type : ENUM
+  description : TEXT
+}
+entity affectation {
+  * id : INT <<PK>>
+  --
+  sportif_id : INT <<FK>>
+  programme_id : INT <<FK>>
+  date_debut : DATE
+  date_fin : DATE
+  statut : ENUM
+  sportif_actif : INT <<UNIQUE, généré>>
+}
+entity seance {
+  * id : INT <<PK>>
+  --
+  sportif_id : INT <<FK>>
+  programme_id : INT <<FK>>
+  date_seance : DATE
+  duree_min : SMALLINT
+  ressenti : TINYINT
+  commentaire : VARCHAR(255)
+}
+entity mesure {
+  * id : INT <<PK>>
+  --
+  sportif_id : INT <<FK>>
+  date_mesure : DATE
+  poids_kg : DECIMAL
+  tour_taille_cm : DECIMAL
+  masse_grasse_pct : DECIMAL
+}
+entity aliment {
+  * id : INT <<PK>>
+  --
+  nom : VARCHAR(100)
+  categorie : VARCHAR(40)
+  calories_100g : DECIMAL
+  proteines_100g : DECIMAL
+  glucides_100g : DECIMAL
+  lipides_100g : DECIMAL
+  cree_par : INT <<FK>>
+}
+entity repas {
+  * id : INT <<PK>>
+  --
+  sportif_id : INT <<FK>>
+  date_repas : DATE
+  type_repas : ENUM
+  aliment_id : INT <<FK>>
+  quantite_g : DECIMAL
+}
+
+utilisateur ||--o| profil_sportif
+utilisateur |o--o{ profil_sportif : coach
+utilisateur ||--o{ programme : coach
+programme ||--o{ programme_exercice
+exercice ||--o{ programme_exercice
+utilisateur ||--o{ affectation
+programme ||--o{ affectation
+utilisateur ||--o{ seance
+programme |o--o{ seance
+utilisateur ||--o{ mesure
+utilisateur |o--o{ aliment : créé par
+utilisateur ||--o{ repas
+aliment ||--o{ repas
+@enduml

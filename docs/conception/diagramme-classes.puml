@@ -1,0 +1,168 @@
+@startuml diagramme-classes
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+hide empty members
+
+class Utilisateur {
+  - id : int
+  - nom : String
+  - prenom : String
+  - email : String
+  - motDePasseHash : String
+  - role : Role
+  - actif : boolean
+  - dateCreation : LocalDateTime
+  + getNomComplet() : String
+}
+
+class ProfilSportif {
+  - sexe : Sexe
+  - dateNaissance : LocalDate
+  - tailleCm : double
+  - objectif : Objectif
+  - niveauActivite : NiveauActivite
+  + getAge() : int
+}
+
+class Programme {
+  - id : int
+  - nom : String
+  - description : String
+  - objectif : Objectif
+  - niveau : NiveauProgramme
+  - dateCreation : LocalDateTime
+}
+
+class ProgrammeExercice {
+  - id : int
+  - jour : int
+  - ordre : int
+  - series : Integer
+  - repetitions : Integer
+  - chargeKg : Double
+  - dureeMin : Integer
+  - consigne : String
+}
+
+class Exercice {
+  - id : int
+  - nom : String
+  - groupeMusculaire : String
+  - type : TypeExercice
+  - description : String
+}
+
+class Affectation {
+  - id : int
+  - dateDebut : LocalDate
+  - dateFin : LocalDate
+  - statut : StatutAffectation
+}
+
+class Seance {
+  - id : int
+  - dateSeance : LocalDate
+  - dureeMin : int
+  - ressenti : int
+  - commentaire : String
+}
+
+class Mesure {
+  - id : int
+  - dateMesure : LocalDate
+  - poidsKg : double
+  - tourTailleCm : Double
+  - masseGrassePct : Double
+}
+
+class Aliment {
+  - id : int
+  - nom : String
+  - categorie : String
+  - calories100g : double
+  - proteines100g : double
+  - glucides100g : double
+  - lipides100g : double
+  + isPersonnalise() : boolean
+}
+
+class Repas {
+  - id : int
+  - dateRepas : LocalDate
+  - typeRepas : TypeRepas
+  - quantiteG : double
+  + getCalories() : double
+  + getProteines() : double
+  + getGlucides() : double
+  + getLipides() : double
+}
+
+enum Role {
+  ADMIN
+  COACH
+  SPORTIF
+}
+enum Objectif {
+  PERTE_POIDS
+  MAINTIEN
+  PRISE_MASSE
+  + getAjustementKcal() : int
+}
+enum NiveauActivite {
+  SEDENTAIRE
+  LEGER
+  MODERE
+  ACTIF
+  TRES_ACTIF
+  + getFacteur() : double
+}
+enum Sexe {
+  H
+  F
+}
+enum NiveauProgramme {
+  DEBUTANT
+  INTERMEDIAIRE
+  AVANCE
+}
+enum TypeExercice {
+  FORCE
+  CARDIO
+  MOBILITE
+}
+enum TypeRepas {
+  PETIT_DEJEUNER
+  DEJEUNER
+  DINER
+  COLLATION
+}
+enum StatutAffectation {
+  ACTIF
+  TERMINE
+}
+
+Utilisateur "1" -- "0..1" ProfilSportif : sportif >
+ProfilSportif "*" -- "0..1" Utilisateur : suivi par (coach) >
+Programme "*" -- "1" Utilisateur : créé par (coach) >
+Programme "1" *-- "*" ProgrammeExercice : contient >
+ProgrammeExercice "*" -- "1" Exercice : porte sur >
+Affectation "*" -- "1" Utilisateur : sportif >
+Affectation "*" -- "1" Programme : programme >
+Seance "*" -- "1" Utilisateur : sportif >
+Seance "*" -- "0..1" Programme : rattachée à >
+Mesure "*" -- "1" Utilisateur : sportif >
+Repas "*" -- "1" Utilisateur : sportif >
+Repas "*" -- "1" Aliment : contient >
+Aliment "*" -- "0..1" Utilisateur : créé par (sportif) >
+
+Utilisateur ..> Role
+ProfilSportif ..> Sexe
+ProfilSportif ..> Objectif
+ProfilSportif ..> NiveauActivite
+Programme ..> NiveauProgramme
+Exercice ..> TypeExercice
+Repas ..> TypeRepas
+Affectation ..> StatutAffectation
+@enduml

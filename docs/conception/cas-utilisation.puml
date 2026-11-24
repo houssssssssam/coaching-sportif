@@ -1,0 +1,67 @@
+@startuml cas-utilisation
+left to right direction
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam packageStyle rectangle
+
+actor "Administrateur" as A
+actor "Coach" as C
+actor "Sportif" as S
+
+rectangle "Application Coaching sportif" {
+  rectangle "Administration" {
+    usecase "Gérer les utilisateurs" as UA1
+    usecase "Désactiver / réactiver un compte" as UA2
+    usecase "Réinitialiser un mot de passe" as UA3
+    usecase "Gérer le catalogue des exercices" as UA4
+    usecase "Gérer le catalogue des aliments" as UA5
+  }
+
+  rectangle "Coaching" {
+    usecase "Gérer ses programmes" as UC1
+    usecase "Définir le contenu d'un programme" as UC2
+    usecase "Consulter ses sportifs" as UC3
+    usecase "Suivre la progression d'un sportif" as UC4
+    usecase "Affecter un programme" as UC5
+    usecase "Clôturer le programme actif" as UC6
+  }
+
+  rectangle "Suivi personnel" {
+    usecase "Consulter son programme" as US1
+    usecase "Enregistrer une séance" as US2
+    usecase "Enregistrer une mesure" as US3
+    usecase "Confirmer une variation de poids" as US4
+    usecase "Tenir son journal alimentaire" as US5
+    usecase "Rechercher un aliment" as US6
+    usecase "Créer un aliment personnalisé" as US7
+    usecase "Consulter son bilan nutritionnel" as US8
+    usecase "Modifier son profil" as US9
+  }
+}
+
+A --> UA1
+A --> UA4
+A --> UA5
+UA1 <. UA2 : <<extend>>
+UA1 <. UA3 : <<extend>>
+
+C --> UC1
+C --> UC3
+C --> UC5
+UC1 <. UC2 : <<extend>>
+UC3 <. UC4 : <<extend>>
+UC5 .> UC6 : <<include>>
+
+S --> US1
+S --> US2
+S --> US3
+S --> US5
+S --> US8
+S --> US9
+US3 <. US4 : <<extend>>
+US5 .> US6 : <<include>>
+US5 <. US7 : <<extend>>
+
+note "Tous les cas d'utilisation exigent une\nauthentification (email + mot de passe)\net le rôle correspondant." as N1
+@enduml
