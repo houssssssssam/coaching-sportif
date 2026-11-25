@@ -66,6 +66,7 @@ public class MainController {
                     new EntreeMenu("Mes sportifs", "coach-sportifs"));
             case SPORTIF -> List.of(
                     new EntreeMenu("Accueil", "accueil"),
+                    new EntreeMenu("Tableau de bord", "tableau-bord"),
                     new EntreeMenu("Mon programme", "sportif-programme"),
                     new EntreeMenu("Mes séances", "sportif-seances"),
                     new EntreeMenu("Mes mesures", "sportif-mesures"),

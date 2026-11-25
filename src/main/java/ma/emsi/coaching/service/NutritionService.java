@@ -15,6 +15,8 @@ import ma.emsi.coaching.model.Utilisateur;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Règle métier principale : calcul des besoins nutritionnels et suivi du journal alimentaire.
@@ -98,6 +100,28 @@ public class NutritionService {
         }
         return new BilanJournalier(jour, repas, objectif, arrondir(kcal), arrondir(p), arrondir(g),
                 arrondir(l), statut);
+    }
+
+    /**
+     * Calories consommées par jour sur une période (les jours sans repas valent 0),
+     * dans l'ordre chronologique. Sert aux graphiques du tableau de bord.
+     */
+    public Map<LocalDate, Double> caloriesParJour(int sportifId, LocalDate debut, LocalDate fin) {
+        acces.verifierAccesSportif(sportifId);
+        Map<LocalDate, Double> parJour = new TreeMap<>();
+        for (LocalDate d = debut; !d.isAfter(fin); d = d.plusDays(1)) {
+            parJour.put(d, 0.0);
+        }
+        for (Repas r : repasDao.trouverEntre(sportifId, debut, fin)) {
+            parJour.merge(r.getDateRepas(), r.getCalories(), Double::sum);
+        }
+        parJour.replaceAll((d, kcal) -> arrondir(kcal));
+        return parJour;
+    }
+
+    public List<Repas> journal(int sportifId, LocalDate debut, LocalDate fin) {
+        acces.verifierAccesSportif(sportifId);
+        return repasDao.trouverEntre(sportifId, debut, fin);
     }
 
     public Repas ajouterAuJournal(Repas r) {

@@ -47,6 +47,9 @@
                 <Label text="Suivi (4 dernières semaines)" styleClass="sous-titre"/>
                 <Label fx:id="texteSuivi" wrapText="true"/>
 
+                <Button fx:id="boutonTableauBord" text="Voir le tableau de bord" styleClass="bouton-secondaire"
+                        maxWidth="Infinity" onAction="#ouvrirTableauBord"/>
+
                 <Label text="Affecter un programme" styleClass="sous-titre"/>
                 <ComboBox fx:id="comboProgramme"/>
                 <DatePicker fx:id="champDateDebut"/>

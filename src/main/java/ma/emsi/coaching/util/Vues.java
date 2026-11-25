@@ -45,6 +45,20 @@ public final class Vues {
         }
     }
 
+    /** Ouvre une vue dans une nouvelle fenêtre et renvoie son loader (pour accéder au contrôleur). */
+    public static FXMLLoader ouvrirFenetre(String nom, String titre, double largeur, double hauteur) {
+        FXMLLoader loader = charger(nom);
+        Scene scene = new Scene(loader.getRoot(), largeur, hauteur);
+        scene.getStylesheets().add(Vues.class.getResource(CSS).toExternalForm());
+        scene.getRoot().setStyle("-fx-padding: 20;");
+        Stage s = new Stage();
+        s.initOwner(fenetre);
+        s.setTitle("Coaching sportif - " + titre);
+        s.setScene(scene);
+        s.show();
+        return loader;
+    }
+
     /** Remplace tout le contenu de la fenêtre par une vue. */
     public static void afficher(String nom, String titre, double largeur, double hauteur) {
         Parent racine = charger(nom).getRoot();

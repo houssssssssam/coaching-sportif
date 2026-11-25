@@ -25,6 +25,7 @@ import ma.emsi.coaching.service.SuiviService;
 import ma.emsi.coaching.service.UtilisateurService;
 import ma.emsi.coaching.service.ValidationException;
 import ma.emsi.coaching.util.Alertes;
+import ma.emsi.coaching.util.Vues;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -162,6 +163,21 @@ public class CoachSportifsController {
                     + (a.getDateFin() == null ? " → en cours" : " → " + a.getDateFin().format(FORMAT)));
         }
         listeHistorique.getItems().setAll(historique);
+    }
+
+    @FXML
+    private void ouvrirTableauBord() {
+        if (selection == null) {
+            return;
+        }
+        try {
+            Utilisateur s = selection.sportif();
+            TableauBordController c = Vues.ouvrirFenetre("tableau-bord", "Tableau de bord de " + s.getNomComplet(),
+                    1100, 760).getController();
+            c.afficher(s.getId(), s.getNomComplet());
+        } catch (RuntimeException e) {
+            Alertes.gerer(e);
+        }
     }
 
     @FXML

@@ -185,3 +185,39 @@
     -fx-text-fill: #b45309;
     -fx-font-weight: bold;
 }
+
+/* ---------- Graphiques ---------- */
+.chart {
+    -fx-padding: 4 0 0 0;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #2563eb;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #2563eb, white;
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: #2563eb;
+}
+
+/* Deuxième série (objectif calorique) : ligne pointillée, sans points */
+.default-color1.chart-series-line {
+    -fx-stroke: #9ca3af;
+    -fx-stroke-dash-array: 6 4;
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.chart-legend-item-symbol.default-color1 {
+    -fx-background-color: #9ca3af;
+}
