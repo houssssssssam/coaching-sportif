@@ -22,7 +22,7 @@ public class App extends Application {
         Vues.initialiser(stage);
         stage.setMinWidth(420);
         stage.setMinHeight(480);
-        Vues.afficher("login", "Connexion", 420, 500);
+        Vues.afficher("login", "Connexion", 420, 540);
     }
 
     public static void main(String[] args) {

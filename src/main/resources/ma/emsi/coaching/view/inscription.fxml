@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ma.emsi.coaching.controller.InscriptionController"
+            fitToWidth="true" fitToHeight="true" styleClass="page-login">
+    <VBox spacing="10" styleClass="page-login">
+        <padding>
+            <Insets top="30" right="40" bottom="30" left="40"/>
+        </padding>
+
+        <Label text="Créer un compte sportif" styleClass="titre-login"/>
+        <Label text="Suivez votre nutrition, vos mesures et vos séances dès maintenant. Un coach pourra vous être attribué ensuite."
+               styleClass="texte-secondaire" wrapText="true"/>
+
+        <Label text="Identité" styleClass="sous-titre"/>
+        <GridPane hgap="12" vgap="6">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+            <Label text="Prénom" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label text="Nom" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <TextField fx:id="champPrenom" maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="champNom" maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        </GridPane>
+        <Label text="Email"/>
+        <TextField fx:id="champEmail" promptText="exemple@mail.ma"/>
+        <GridPane hgap="12" vgap="6">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+            <Label text="Mot de passe" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label text="Confirmation" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <PasswordField fx:id="champMotDePasse" maxWidth="Infinity" promptText="8 caractères, lettre et chiffre"
+                           GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="champConfirmation" maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Label text="Profil physique" styleClass="sous-titre"/>
+        <GridPane hgap="12" vgap="6">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+            <Label text="Sexe" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label text="Date de naissance" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <ComboBox fx:id="comboSexe" maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="champNaissance" maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="Taille (cm)" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label text="Poids actuel (kg)" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <TextField fx:id="champTaille" maxWidth="Infinity" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="champPoids" maxWidth="Infinity" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label text="Objectif" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label text="Niveau d'activité" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <ComboBox fx:id="comboObjectif" maxWidth="Infinity" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="comboActivite" maxWidth="Infinity" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Label fx:id="messageErreur" styleClass="message-erreur" wrapText="true"/>
+        <Button text="Créer mon compte" defaultButton="true" maxWidth="Infinity" styleClass="bouton-principal"
+                onAction="#creerCompte"/>
+        <Hyperlink text="J'ai déjà un compte : me connecter" onAction="#retourConnexion"/>
+    </VBox>
+</ScrollPane>

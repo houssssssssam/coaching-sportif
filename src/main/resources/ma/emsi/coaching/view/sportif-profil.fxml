@@ -38,6 +38,16 @@
                 <Label fx:id="texteCalcul" styleClass="texte-secondaire" wrapText="true"/>
             </VBox>
             <VBox spacing="8" styleClass="panneau-formulaire">
+                <Label text="Mon poids" styleClass="titre-formulaire"/>
+                <Label fx:id="textePoids" styleClass="texte-secondaire" wrapText="true"/>
+                <HBox spacing="8">
+                    <TextField fx:id="champPoids" promptText="Nouveau poids (kg)" HBox.hgrow="ALWAYS"/>
+                    <Button text="Enregistrer la pesée" styleClass="bouton-principal" minWidth="-Infinity"
+                            onAction="#enregistrerPoids"/>
+                </HBox>
+                <Label text="L'historique complet est dans « Mes mesures »." styleClass="texte-secondaire"/>
+            </VBox>
+            <VBox spacing="8" styleClass="panneau-formulaire">
                 <Label text="Changer mon mot de passe" styleClass="titre-formulaire"/>
                 <PasswordField fx:id="champAncien" promptText="Mot de passe actuel"/>
                 <PasswordField fx:id="champNouveau" promptText="Nouveau mot de passe"/>

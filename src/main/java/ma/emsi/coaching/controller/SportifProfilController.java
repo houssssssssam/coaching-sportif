@@ -17,9 +17,12 @@ import ma.emsi.coaching.service.ObjectifNutritionnel;
 import ma.emsi.coaching.service.Session;
 import ma.emsi.coaching.service.SuiviService;
 import ma.emsi.coaching.service.UtilisateurService;
+import ma.emsi.coaching.service.VariationSuspecteException;
 import ma.emsi.coaching.util.Alertes;
 import ma.emsi.coaching.util.Formulaires;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -35,6 +38,8 @@ public class SportifProfilController {
     @FXML private ComboBox<NiveauActivite> comboActivite;
     @FXML private Label texteObjectif;
     @FXML private Label texteCalcul;
+    @FXML private Label textePoids;
+    @FXML private TextField champPoids;
     @FXML private PasswordField champAncien;
     @FXML private PasswordField champNouveau;
     @FXML private PasswordField champConfirmation;
@@ -43,6 +48,7 @@ public class SportifProfilController {
     private final SuiviService suiviService = new SuiviService();
     private ProfilSportif profil;
     private Double dernierPoids;
+    private Mesure derniereMesure;
 
     @FXML
     private void initialize() {
@@ -74,7 +80,11 @@ public class SportifProfilController {
         comboObjectif.setValue(profil.getObjectif());
         comboActivite.setValue(profil.getNiveauActivite());
         List<Mesure> mesures = suiviService.mesures(id);
-        dernierPoids = mesures.isEmpty() ? null : mesures.get(mesures.size() - 1).getPoidsKg();
+        derniereMesure = mesures.isEmpty() ? null : mesures.get(mesures.size() - 1);
+        dernierPoids = derniereMesure == null ? null : derniereMesure.getPoidsKg();
+        textePoids.setText(derniereMesure == null ? "Aucune pesée enregistrée."
+                : "Dernière pesée : " + Formulaires.texte(derniereMesure.getPoidsKg()) + " kg, le "
+                + derniereMesure.getDateMesure().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         afficherObjectif(profil, false);
     }
 
@@ -139,6 +149,38 @@ public class SportifProfilController {
             Alertes.gerer(e);
         }
         charger();
+    }
+
+    /**
+     * Enregistre le poids du jour. Une seule mesure par jour : si une pesée existe déjà
+     * aujourd'hui, elle est corrigée au lieu d'en créer une seconde.
+     */
+    @FXML
+    private void enregistrerPoids() {
+        try {
+            double poids = Formulaires.lireDouble(champPoids, "Poids");
+            if (derniereMesure != null && derniereMesure.getDateMesure().equals(LocalDate.now())) {
+                derniereMesure.setPoidsKg(poids);
+                suiviService.modifierMesure(derniereMesure);
+            } else {
+                Mesure m = new Mesure();
+                m.setDateMesure(LocalDate.now());
+                m.setPoidsKg(poids);
+                try {
+                    suiviService.enregistrerMesure(m, false);
+                } catch (VariationSuspecteException e) {
+                    if (!Alertes.confirmer(e.getMessage())) {
+                        return;
+                    }
+                    suiviService.enregistrerMesure(m, true);
+                }
+            }
+            champPoids.clear();
+            charger();
+            Alertes.info("Pesée enregistrée. Votre objectif nutritionnel a été recalculé.");
+        } catch (RuntimeException e) {
+            Alertes.gerer(e);
+        }
     }
 
     @FXML

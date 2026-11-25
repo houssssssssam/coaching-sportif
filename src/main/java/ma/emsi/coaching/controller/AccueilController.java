@@ -43,6 +43,7 @@ public class AccueilController {
         UtilisateurService us = new UtilisateurService();
         ajouterCarte("Coachs", String.valueOf(us.listerParRole(Role.COACH).size()));
         ajouterCarte("Sportifs", String.valueOf(us.listerParRole(Role.SPORTIF).size()));
+        ajouterCarte("Sportifs sans coach", String.valueOf(us.listerSansCoach().size()));
         ajouterCarte("Exercices", String.valueOf(new CatalogueService().exercices().size()));
         ajouterCarte("Aliments", String.valueOf(new NutritionService().catalogue().size()));
     }

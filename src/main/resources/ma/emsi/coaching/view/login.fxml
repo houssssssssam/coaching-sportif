@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -30,4 +31,6 @@
 
     <Button fx:id="boutonConnexion" text="Se connecter" defaultButton="true"
             maxWidth="Infinity" styleClass="bouton-principal" onAction="#seConnecter"/>
+
+    <Hyperlink text="Pas encore de compte ? Créer un compte sportif" onAction="#ouvrirInscription"/>
 </VBox>

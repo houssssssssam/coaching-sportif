@@ -29,6 +29,11 @@ public class LoginController {
     }
 
     @FXML
+    private void ouvrirInscription() {
+        Vues.afficher("inscription", "Inscription", 520, 760);
+    }
+
+    @FXML
     private void seConnecter() {
         messageErreur.setText("");
         try {

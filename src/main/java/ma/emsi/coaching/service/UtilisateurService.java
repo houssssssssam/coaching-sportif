@@ -1,7 +1,9 @@
 package ma.emsi.coaching.service;
 
+import ma.emsi.coaching.dao.MesureDao;
 import ma.emsi.coaching.dao.ProfilSportifDao;
 import ma.emsi.coaching.dao.UtilisateurDao;
+import ma.emsi.coaching.model.Mesure;
 import ma.emsi.coaching.model.ProfilSportif;
 import ma.emsi.coaching.model.Role;
 import ma.emsi.coaching.model.Utilisateur;
@@ -10,6 +12,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -21,6 +24,8 @@ public class UtilisateurService {
 
     private final UtilisateurDao utilisateurDao = new UtilisateurDao();
     private final ProfilSportifDao profilDao = new ProfilSportifDao();
+    private final MesureDao mesureDao = new MesureDao();
+    private static final Logger LOG = Logger.getLogger(UtilisateurService.class.getName());
 
     public List<Utilisateur> listerTous() {
         Session.exiger(Role.ADMIN);
@@ -49,6 +54,42 @@ public class UtilisateurService {
         preparer(u, motDePasse);
         validerProfil(profil);
         return utilisateurDao.ajouterSportif(u, profil);
+    }
+
+    /**
+     * Inscription autonome d'un sportif, sans être connecté.
+     * Le compte est actif immédiatement mais sans coach : le sportif peut suivre sa nutrition,
+     * ses mesures et ses séances ; l'administrateur lui attribuera un coach plus tard.
+     * Une première pesée est enregistrée pour pouvoir calculer l'objectif calorique.
+     */
+    public Utilisateur inscrire(Utilisateur u, String motDePasse, String confirmation,
+                                ProfilSportif profil, double poidsKg) {
+        if (motDePasse == null || !motDePasse.equals(confirmation)) {
+            throw new ValidationException("La confirmation ne correspond pas au mot de passe.");
+        }
+        if (poidsKg < 30 || poidsKg > 300) {
+            throw new ValidationException("Le poids doit être compris entre 30 et 300 kg.");
+        }
+        u.setId(0);
+        u.setRole(Role.SPORTIF); // une inscription ne peut créer qu'un sportif
+        profil.setCoachId(null);
+        preparer(u, motDePasse);
+        validerProfil(profil);
+        utilisateurDao.ajouterSportif(u, profil);
+
+        Mesure premiere = new Mesure();
+        premiere.setSportifId(u.getId());
+        premiere.setDateMesure(LocalDate.now());
+        premiere.setPoidsKg(poidsKg);
+        mesureDao.ajouter(premiere);
+        LOG.info(() -> "Nouvelle inscription : " + u.getEmail());
+        return u;
+    }
+
+    /** Sportifs inscrits seuls, en attente d'un coach. */
+    public List<Utilisateur> listerSansCoach() {
+        Session.exiger(Role.ADMIN);
+        return utilisateurDao.trouverSportifsSansCoach();
     }
 
     public void modifier(Utilisateur u) {

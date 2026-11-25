@@ -9,6 +9,7 @@ import ma.emsi.coaching.model.Programme;
 import ma.emsi.coaching.model.ProgrammeExercice;
 import ma.emsi.coaching.service.ProgrammeService;
 import ma.emsi.coaching.service.Session;
+import ma.emsi.coaching.service.UtilisateurService;
 import ma.emsi.coaching.util.Formulaires;
 
 import java.time.format.DateTimeFormatter;
@@ -37,7 +38,11 @@ public class SportifProgrammeController {
         Optional<Affectation> actif = service.programmeActif(id);
         if (actif.isEmpty()) {
             nomProgramme.setText("Aucun programme actif");
-            infosProgramme.setText("Votre coach ne vous a pas encore affecté de programme.");
+            boolean aUnCoach = new UtilisateurService().coachDe(id).isPresent();
+            infosProgramme.setText(aUnCoach
+                    ? "Votre coach ne vous a pas encore affecté de programme."
+                    : "Vous n'avez pas encore de coach : l'administrateur vous en attribuera un. "
+                    + "En attendant, vous pouvez suivre votre nutrition, vos mesures et vos séances libres.");
             return;
         }
         Programme p = actif.get().getProgramme();

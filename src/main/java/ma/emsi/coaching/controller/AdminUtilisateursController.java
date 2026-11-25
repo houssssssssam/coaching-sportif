@@ -24,6 +24,8 @@ import ma.emsi.coaching.util.Alertes;
 import ma.emsi.coaching.util.Formulaires;
 
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Gestion des comptes par l'administrateur.
@@ -31,6 +33,7 @@ import java.util.Objects;
 public class AdminUtilisateursController {
 
     private static final String TOUS = "Tous les rôles";
+    private static final String SANS_COACH = "Sportifs sans coach";
 
     @FXML private TextField champRecherche;
     @FXML private ComboBox<String> filtreRole;
@@ -60,6 +63,8 @@ public class AdminUtilisateursController {
 
     private final UtilisateurService service = new UtilisateurService();
     private FilteredList<Utilisateur> liste;
+    /** Identifiants des sportifs inscrits seuls et pas encore suivis par un coach. */
+    private Set<Integer> sansCoach = Set.of();
     /** Utilisateur en cours de modification (null = création). */
     private Utilisateur selection;
 
@@ -75,6 +80,7 @@ public class AdminUtilisateursController {
         for (Role r : Role.values()) {
             filtreRole.getItems().add(r.getLibelle());
         }
+        filtreRole.getItems().add(SANS_COACH);
         filtreRole.setValue(TOUS);
 
         comboRole.getItems().setAll(Role.values());
@@ -101,6 +107,7 @@ public class AdminUtilisateursController {
 
     private void charger() {
         liste = new FilteredList<>(FXCollections.observableArrayList(service.listerTous()));
+        sansCoach = service.listerSansCoach().stream().map(Utilisateur::getId).collect(Collectors.toSet());
         table.setItems(liste);
         filtrer();
     }
@@ -109,7 +116,8 @@ public class AdminUtilisateursController {
         String texte = champRecherche.getText() == null ? "" : champRecherche.getText().toLowerCase().trim();
         String role = filtreRole.getValue();
         liste.setPredicate(u ->
-                (TOUS.equals(role) || u.getRole().getLibelle().equals(role))
+                (TOUS.equals(role) || u.getRole().getLibelle().equals(role)
+                        || (SANS_COACH.equals(role) && sansCoach.contains(u.getId())))
                         && (texte.isEmpty()
                         || u.getNomComplet().toLowerCase().contains(texte)
                         || u.getEmail().contains(texte)));

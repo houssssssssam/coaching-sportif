@@ -147,6 +147,13 @@ public class UtilisateurDao implements Dao<Utilisateur> {
                 + "WHERE p.coach_id = ? ORDER BY u.nom, u.prenom", coachId);
     }
 
+    /** Sportifs inscrits qui n'ont pas encore de coach (inscription autonome). */
+    public List<Utilisateur> trouverSportifsSansCoach() {
+        return trouverListe("SELECT u.id, u.nom, u.prenom, u.email, u.mot_de_passe_hash, u.role, u.actif, "
+                + "u.date_creation FROM utilisateur u JOIN profil_sportif p ON p.utilisateur_id = u.id "
+                + "WHERE p.coach_id IS NULL ORDER BY u.date_creation DESC");
+    }
+
     public boolean emailExiste(String email, int idExclu) {
         String sql = "SELECT COUNT(*) FROM utilisateur WHERE email = ? AND id <> ?";
         try (Connection cn = DatabaseConnection.getConnection();

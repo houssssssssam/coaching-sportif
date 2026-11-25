@@ -102,7 +102,7 @@ public class MainController {
     private void seDeconnecter() {
         if (Alertes.confirmer("Voulez-vous vous déconnecter ?")) {
             new AuthService().deconnecter();
-            Vues.afficher("login", "Connexion", 420, 500);
+            Vues.afficher("login", "Connexion", 420, 540);
         }
     }
 }
